@@ -4,18 +4,12 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from django.dispatch import receiver
-# Create your models here.
-#def get_image_path(filename):
-#    return os.path.join('photos',filename)
 
-#def photos_file_name(instance, filename):
-#    return '/'.join(['photos', instance.id, filename])
 def photos_file_name(instance, filename):
     return os.path.join('photos', str(instance.id), filename)
 class Photos(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.TextField(blank = False)
-#    text = models.TextField(blank = False)
     image = models.ImageField(upload_to=photos_file_name, blank=True, null=True)
     owner = models.ForeignKey('auth.User', related_name='photos', on_delete=models.CASCADE)
 
